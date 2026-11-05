@@ -1,0 +1,34 @@
+{
+  "name": "uscardforum-writing-style-poc",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "predev": "node tools/check-pyodide-wheels.mjs",
+    "dev": "yarn run build:userscript && vite --host 127.0.0.1 --port 5173 --strictPort",
+    "prebuild": "node tools/check-pyodide-wheels.mjs",
+    "build": "yarn run typecheck && vite build && yarn run build:userscript",
+    "preview": "vite preview --host 127.0.0.1 --port 4173 --strictPort",
+    "pyodide:check": "node tools/check-pyodide-wheels.mjs",
+    "test:python": "node tools/test-python-engine.mjs",
+    "typecheck": "tsc --noEmit && tsc -p tsconfig.userscript.json --noEmit && tsc -p tsconfig.tests.json --noEmit",
+    "test": "yarn run build:userscript && yarn run build:tests && node --test --test-isolation=none .test-build/tests/*.test.js",
+    "build:userscript": "tsc -p tsconfig.userscript.json",
+    "build:tests": "tsc -p tsconfig.tests.json",
+    "evaluate": "yarn run build:tests && node tools/analyze-json.mjs"
+  },
+  "dependencies": {
+    "pyodide": "314.0.7",
+    "wink-nlp": "^2.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "24.12.2",
+    "typescript": "^5.9.3",
+    "vite": "^7.1.0",
+    "vite-plugin-static-copy": "^3.1.4"
+  },
+  "engines": {
+    "node": ">=22.18.0"
+  },
+  "packageManager": "yarn@1.22.22"
+}

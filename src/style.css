@@ -1,0 +1,30 @@
+:root { font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 15px; line-height: 1.55; color: #192333; background: #f4f6f8; }
+* { box-sizing: border-box; }
+body { margin: 0; }
+main { max-width: 980px; margin: 4rem auto; padding: 0 1.25rem 5rem; }
+h1 { margin: .1rem 0 .3rem; font-size: 2.25rem; letter-spacing: -.025em; }
+h2 { margin: 0 0 1rem; font-size: 1.2rem; }
+p { margin: .8rem 0 0; }
+.eyebrow { color: #5376a7; font-size: .8rem; letter-spacing: .12em; font-weight: 700; }
+.muted { color: #606c7b; }
+.panel { background: white; border: 1px solid #e4e8ed; border-radius: 12px; padding: 1.5rem; margin-top: 1.5rem; box-shadow: 0 4px 12px rgba(22, 34, 51, .03); }
+.actions, .matrix-controls, .engine-controls { display: flex; flex-wrap: wrap; gap: .75rem; align-items: center; }
+.matrix-controls { margin-bottom: .75rem; }
+.engine-controls { margin-top: .75rem; }
+.matrix-controls label, .engine-controls label { font-weight: 600; }
+.matrix-controls select, .engine-controls select { font: inherit; padding: .45rem .65rem; border: 1px solid #c9d3df; border-radius: 7px; background: white; color: #192333; }
+.matrix-controls select:focus-visible, .engine-controls select:focus-visible { outline: 3px solid #192333; outline-offset: 3px; }
+button, .file-button { display: inline-block; font: inherit; font-weight: 600; padding: .55rem 1rem; border: 1px solid #426aa5; color: white; background: #426aa5; border-radius: 7px; cursor: pointer; }
+button.secondary, .file-button { background: white; color: #426aa5; }
+button:disabled { opacity: .4; cursor: not-allowed; }
+.file-button { position: relative; }
+.file-button input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+.file-button:focus-within, button:focus-visible { outline: 3px solid #192333; outline-offset: 3px; }
+caption { text-align: left; color: #606c7b; padding-bottom: .5rem; }
+progress { display: block; width: 100%; height: 1rem; margin-top: 1.25rem; }
+.overflow { max-width: 100%; overflow-x: auto; }
+table { border-collapse: collapse; margin: 1rem 0; min-width: 480px; }
+th, td { padding: .75rem .9rem; border: 1px solid #e0e6ec; text-align: center; }
+th { background: #f5f7fa; }
+td { font-variant-numeric: tabular-nums; }
+strong { color: #27364c; }

@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="zh-Hans">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="referrer" content="no-referrer" />
+    <title>Discourse 写作风格相似度 POC</title>
+  </head>
+  <body>
+    <main>
+      <header>
+        <p class="eyebrow">LOCAL-ONLY ANALYSIS</p>
+        <h1>Discourse 写作相似度</h1>
+        <p class="muted">比较 2–5 个账号的公开发言文本；分数不代表同一人概率。</p>
+      </header>
+      <section class="panel">
+        <h2>1. 载入数据</h2>
+        <div class="actions">
+          <button id="demo-load" class="secondary">载入合成示例</button>
+          <button id="bridge-load">读取油猴缓存</button>
+          <label class="file-button">导入 JSON <input id="file-input" type="file" accept=".json,application/json" /></label>
+        </div>
+        <p id="bridge-status" class="muted" aria-live="polite">正在检测油猴桥接；请在此页面启用同一份采集脚本。</p>
+        <p id="dataset-info" class="muted">尚未载入数据。</p>
+      </section>
+      <section class="panel">
+        <h2>2. 本地分析</h2>
+        <div class="actions">
+          <button id="analyze" disabled>开始分析</button>
+          <button id="cancel" disabled class="secondary">取消</button>
+        </div>
+        <div class="engine-controls">
+          <label for="engine-select">分析引擎</label>
+          <select id="engine-select">
+            <option value="python" selected>Python + scikit-learn（默认，首次约 34 MB）</option>
+            <option value="typescript">TypeScript（轻量，回退/对照）</option>
+          </select>
+          <span id="engine-note" class="muted">默认引擎：Python + scikit-learn，通过本地 Pyodide/WASM 在 Web Worker 内运行。</span>
+        </div>
+        <progress aria-label="分析进度" id="progress" value="0" max="100"></progress>
+        <p id="status" aria-live="polite" class="muted">等待数据。</p>
+      </section>
+      <section class="panel" id="results" hidden>
+        <h2>3. 候选账号对矩阵</h2>
+        <div class="matrix-controls">
+          <label for="metric-select">矩阵指标</label>
+          <select id="metric-select">
+            <option value="profile" selected>风格 profile</option>
+            <option value="combined">综合排序</option>
+            <option value="functionWords">功能词</option>
+            <option value="punctuation">标点</option>
+            <option value="deltaSimilarity">Burrows Delta</option>
+            <option value="topicOverlap">共同话题</option>
+            <option value="relative">相对一致性</option>
+            <option value="backgroundLift">组内提升</option>
+          </select>
+          <span class="muted">颜色按当前矩阵范围归一化；对角线不计。</span>
+        </div>
+        <div id="matrix-container" class="overflow"></div>
+        <div id="diagnostics" class="overflow"></div>
+        <p class="muted">矩阵显示所选指标的账号对分数；悬停单元格可查看该对的全部指标。摘要、话题和采样偏差可能影响结果；这是人工复核线索，不能据此确认现实身份或单独作出封禁决定。</p>
+      </section>
+    </main>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

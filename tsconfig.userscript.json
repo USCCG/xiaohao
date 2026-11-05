@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": [
+      "ES2022",
+      "DOM"
+    ],
+    "module": "None",
+    "types": [],
+    "strict": true,
+    "alwaysStrict": false,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noEmitOnError": true,
+    "removeComments": false,
+    "outFile": "dist/userscript/uscardforum-style.user.js"
+  },
+  "files": [
+    "userscript/uscardforum-style.user.ts",
+    "userscript/rate-limit.ts",
+    "userscript/globals.d.ts"
+  ]
+}

@@ -1,0 +1,10 @@
+node_modules/
+dist/
+*.tsbuildinfo
+.test-build/
+# Real forum exports contain public posts and must not be committed.
+results/
+# Python bytecode from local syntax checks.
+__pycache__/
+*.pyc
+*:Zone.Identifier
