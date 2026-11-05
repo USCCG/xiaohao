@@ -38,6 +38,9 @@ jobs:
       - name: Build the Vite site
         run: yarn build
 
+      - name: Publish the compiled userscript as release.user.js
+        run: cp dist/userscript/uscardforum-style.user.js dist/release.user.js
+
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
 

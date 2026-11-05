@@ -48,7 +48,7 @@ yarn preview
 
 Dev and preview use fixed ports (5173 and 4173) and fail if occupied, because the GM bridge allows exact origins only.
 
-The generated `dist/` is static and the included GitHub Actions workflow deploys it to https://usccg.github.io/xiaohao/ on pushes to `master` (or through **workflow_dispatch**). **Before using another host**, edit the TypeScript userscript's `@match`, `APP_URL` and `APP_ORIGINS` to point at your own exact origin, then recompile. Do not use a wildcard such as `https://*.github.io/*` to relay a dataset.
+The generated `dist/` is static and the included GitHub Actions workflow deploys it to https://usccg.github.io/xiaohao/ on pushes to `master` (or through **workflow_dispatch**). It also copies the compiled userscript to [`release.js`](https://usccg.github.io/xiaohao/release.js) for direct installation. **Before using another host**, edit the TypeScript userscript's `@match`, `APP_URL` and `APP_ORIGINS` to point at your own exact origin, then recompile. Do not use a wildcard such as `https://*.github.io/*` to relay a dataset.
 
 Alternative: use the menu **"导出缓存 JSON"** and import the file on the app; this works even when the bridge is not configured.
 
