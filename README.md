@@ -11,8 +11,8 @@ This tool is for a forum operator's **human review** of publicly visible posts w
 1. On `www.uscardforum.com`, use the Tampermonkey menu **"采集写作样本"**.
 2. Enter 2-5 usernames, `likes` or `views`, and a per-author cap (default 200; hard cap 500).
 3. Fetch `/search.json?q=%40USERNAME%20order%3Alikes&page=1` sequentially. Use only publicly visible results, deduplicate post IDs, and stop on empty/duplicate pages, budget exhaustion or permission errors. On 429, retry the same page with linear backoff: 5, 10, 15 seconds, capped at 60 seconds; reset after a successful page.
-4. Store one versioned JSON dataset in this **same userscript's** GM storage and open `http://127.0.0.1:5173/` (configurable).
-5. On the static app, click **"读取油猴缓存"**, or import exported JSON. Choose the default **TypeScript** engine or the optional **Python + scikit-learn** engine, then press **"开始分析"**. A Web Worker produces an N x N character 2–3-gram frequency-profile cosine matrix, plus function-word, punctuation, Burrows Delta and per-author split-half diagnostics. The results view shows the candidate-pair matrix with a **metric selector** and heatmap coloring; the full pair table and per-author coverage remain below it.
+4. Store one versioned JSON dataset in this **same userscript's** GM storage and open `https://usccg.github.io/xiaohao/` (or the local dev URL).
+5. On the static app, click **"读取油猴缓存"**, or import exported JSON. The default **Python + scikit-learn** engine runs in Pyodide/WASM; TypeScript remains available as a fallback. Press **"开始分析"**. A Web Worker produces an N x N character 2–3-gram frequency-profile cosine matrix, plus function-word, punctuation, Burrows Delta and per-author split-half diagnostics. The results view shows the candidate-pair matrix with a **metric selector** and heatmap coloring; the full pair table and per-author coverage remain below it.
 
 > **Important data-quality limitation:** Discourse `/search.json` commonly supplies an HTML **blurb/snippet**, not the full post. This POC uses it as an **excerpt baseline**, explicitly marks `quality: "excerpt"`, and shows the limitation in the UI. `user_actions.json` likewise returns an excerpt. Do NOT silently call snippets complete articles. Follow-up Codex work can add an *optional*, separately capped, rate-limited full-text mode via `/posts/{id}.json` or topic-batched `/t/{topic_id}/posts.json`, verifying real endpoint behavior first. Do not fire off hundreds/thousands of requests by default.
 
@@ -29,7 +29,7 @@ The five Pyodide wheels used by the Python engine are vendored under `vendor/pyo
 
 For a forum-free demo, open the app, click **"载入合成示例"**, then **"开始分析"**. This uses only the bundled fictional fixture; it makes no forum request.
 
-The dev command first compiles the userscript. Install `dist/userscript/uscardforum-style.user.js` in **Tampermonkey**. Open the forum, start collection using Tampermonkey's extension menu, and use the app at http://127.0.0.1:5173/.
+The dev command first compiles the userscript. Install `dist/userscript/uscardforum-style.user.js` in **Tampermonkey**. Open the forum, start collection using Tampermonkey's extension menu, and use the deployed app at https://usccg.github.io/xiaohao/ or the local app at http://127.0.0.1:5173/.
 
 To compile only the installable userscript (no Vite required):
 
@@ -48,7 +48,7 @@ yarn preview
 
 Dev and preview use fixed ports (5173 and 4173) and fail if occupied, because the GM bridge allows exact origins only.
 
-The generated `dist/` is static and can be deployed to GitHub Pages or any static hosting. **Before using another host**, edit the TypeScript userscript's `@match`, `APP_URL` and `APP_ORIGINS` to point at your own exact origin, then recompile. Do not use a wildcard such as `https://*.github.io/*` to relay a dataset.
+The generated `dist/` is static and the included GitHub Actions workflow deploys it to https://usccg.github.io/xiaohao/ on pushes to `master` (or through **workflow_dispatch**). **Before using another host**, edit the TypeScript userscript's `@match`, `APP_URL` and `APP_ORIGINS` to point at your own exact origin, then recompile. Do not use a wildcard such as `https://*.github.io/*` to relay a dataset.
 
 Alternative: use the menu **"导出缓存 JSON"** and import the file on the app; this works even when the bridge is not configured.
 
@@ -56,7 +56,7 @@ Alternative: use the menu **"导出缓存 JSON"** and import the file on the app
 
 Run `yarn build:userscript` (or `yarn build`), then update the existing Tampermonkey installation with `dist/userscript/uscardforum-style.user.js` (version **0.2.1**). Rebuilding the file alone does not update the browser extension. Keep the existing script name/namespace so its GM cache remains associated with the same installation. Refresh both the forum tab and the analyzer tab after updating.
 
-The analyzer displays **油猴桥接已连接** when the script responds. Use the same browser profile and the same installed userscript on the forum and local page. If it reports **未收到油猴回复**, confirm in Tampermonkey's menu that this script runs on the current local URL, and check the extension's site access and userscript execution permissions. Supported local origins remain exactly `http://localhost:5173`, `http://127.0.0.1:5173`, and their `:4173` preview equivalents.
+The analyzer displays **油猴桥接已连接** when the script responds. Use the same browser profile and the same installed userscript on the forum and analyzer page. If it reports **未收到油猴回复**, confirm in Tampermonkey's menu that this script runs on the current URL, and check the extension's site access and userscript execution permissions. Supported analyzer origins are `https://usccg.github.io`, `http://localhost:5173`, `http://127.0.0.1:5173`, and their `:4173` preview equivalents.
 
 Open DevTools Console on **both pages**, enable Info/Warning/Error messages and filter **`[UCF Style]`**:
 

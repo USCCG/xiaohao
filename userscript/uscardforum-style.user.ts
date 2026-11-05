@@ -5,6 +5,7 @@
 // @description  Small, rate-limited public-post sample collector + local-only analyzer bridge.
 // @match        https://www.uscardforum.com/*
 // @match        https://uscardforum.com/*
+// @match        https://usccg.github.io/xiaohao/*
 // @match        http://localhost:5173/*
 // @match        http://127.0.0.1:5173/*
 // @match        http://localhost:4173/*
@@ -29,8 +30,8 @@
   const RESPONSE_EVENT = 'ucf-style-bridge-response';
   console.info('[UCF Style] userscript:start', { version: '0.2.1', origin: window.location.origin });
   const FORUM_ORIGIN = 'https://www.uscardforum.com';
-  const APP_URL = 'http://127.0.0.1:5173/';
-  const APP_ORIGINS = new Set(['http://localhost:5173', 'http://127.0.0.1:5173', 'http://localhost:4173', 'http://127.0.0.1:4173']);
+  const APP_URL = 'https://usccg.github.io/xiaohao/';
+  const APP_ORIGINS = new Set(['https://usccg.github.io', 'http://localhost:5173', 'http://127.0.0.1:5173', 'http://localhost:4173', 'http://127.0.0.1:4173']);
   const HARD_MAX_USERS = 5;
   const HARD_MAX_POSTS = 500;
   const MAX_PAGES_PER_USER = 20;
